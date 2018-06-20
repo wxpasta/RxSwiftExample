@@ -6,11 +6,9 @@
 //  Copyright © 2017 SwifterSwift
 //
 
-// MARK: - Operators
-infix operator ??= : AssignmentPrecedence
-
+// MARK: - Methods
 public extension Optional {
-	
+
 	/// SwifterSwift: Get self of default value (if self is nil).
 	///
 	///		let foo: String? = nil
@@ -25,7 +23,23 @@ public extension Optional {
 		// http://www.russbishop.net/improving-optionals
 		return self ?? defaultValue
 	}
-	
+
+	/// SwifterSwift: Gets the wrapped value of an optional. If the optional is `nil`, throw a custom error.
+    ///
+    ///        let foo: String? = nil
+    ///        try print(foo.unwrapped(or: MyError.notFound)) -> error: MyError.notFound
+    ///
+    ///        let bar: String? = "bar"
+    ///        try print(bar.unwrapped(or: MyError.notFound)) -> "bar"
+    ///
+    /// - Parameter error: The error to throw if the optional is `nil`.
+    /// - Returns: The value wrapped by the optional.
+    /// - Throws: The error passed in.
+    public func unwrapped(or error: Error) throws -> Wrapped {
+        guard let wrapped = self else { throw error }
+        return wrapped
+    }
+
 	/// SwifterSwift: Runs a block to Wrapped if not nil
 	///
 	///		let foo: String? = nil
@@ -45,18 +59,22 @@ public extension Optional {
 		// http://www.russbishop.net/improving-optionals
 		_ = self.map(block)
 	}
-	
-    /// SwifterSwift: Assign an optional value to a variable only if the value is not nil.
-    ///
-    ///     let someParameter: String? = nil
-    ///     let parameters = [String:Any]() //Some parameters to be attached to a GET request
-    ///     parameters[someKey] ??= someParameter //It won't be added to the parameters dict
-    ///
-    /// - Parameters:
-    ///   - lhs: Any?
-    ///   - rhs: Any?
-    public static func ??= (lhs: inout Optional, rhs: Optional) {
-        guard let rhs = rhs else { return }
-        lhs = rhs
-    }
+
+	/// SwifterSwift: Assign an optional value to a variable only if the value is not nil.
+	///
+	///     let someParameter: String? = nil
+	///     let parameters = [String:Any]() //Some parameters to be attached to a GET request
+	///     parameters[someKey] ??= someParameter //It won't be added to the parameters dict
+	///
+	/// - Parameters:
+	///   - lhs: Any?
+	///   - rhs: Any?
+	public static func ??= (lhs: inout Optional, rhs: Optional) {
+		guard let rhs = rhs else { return }
+		lhs = rhs
+	}
+
 }
+
+// MARK: - Operators
+infix operator ??= : AssignmentPrecedence

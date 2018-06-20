@@ -8,7 +8,7 @@
 
 // MARK: - Properties
 public extension Bool {
-	
+
 	/// SwifterSwift: Return 1 if true, or 0 if false.
 	///
 	///		false.int -> 0
@@ -17,7 +17,7 @@ public extension Bool {
 	public var int: Int {
 		return self ? 1 : 0
 	}
-	
+
 	/// SwifterSwift: Return "true" if true, or "false" if false.
 	///
 	///		false.string -> "false"
@@ -26,40 +26,14 @@ public extension Bool {
 	public var string: String {
 		return description
 	}
-	
-	/// SwifterSwift: Return inversed value of bool.
-	///
-	///		false.toggled -> true
-	///		true.toggled -> false
-	///
-	public var toggled: Bool {
-		return !self
-	}
-    
-    /// SwifterSwift: Returns a random boolean value.
-    ///
-    ///     Bool.random -> true
-    ///     Bool.random -> false
-    ///
-    public static var random: Bool {
-        return arc4random_uniform(2) == 1
-    }
-	
-}
 
-// MARK: - Methods
-public extension Bool {
-	
-	/// SwifterSwift: Toggle value for bool.
+	/// SwifterSwift: Returns a random boolean value.
 	///
-	///		var bool = false
-	///		bool.toggle()
-	///		print(bool) -> true
+	///     Bool.random -> true
+	///     Bool.random -> false
 	///
-	/// - Returns: inversed value of bool.
-	@discardableResult public mutating func toggle() -> Bool {
-		self = !self
-		return self
+	public static var random: Bool {
+		return arc4random_uniform(2) == 1
 	}
-	
+
 }
